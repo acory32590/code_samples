@@ -1,0 +1,5 @@
+I was tasked to make a .NET framework screen entitled "Customer Defined Data" for our  HealthClaims project.  This screen was complicated in many ways; it had to be opened from two different locations; once as a pop up window (a child of a parent screen) where data could be read AND edited, and once as a tab in what is known as the Claims read-only session, where it would be its own standalone screen but is read only.
+
+The screen loads in Claim Auxiliary data from Unidata, our choice of database, and converts it to meet our Auxiliary class needs, which is used in other products.  The Auxiliary data is separated into two collections; the DetailAux collection, and the LineAux collection (which is indeed a collection of collections).  The user then can browse the Detail & Line tabs to display and possibly edit the data.
+
+The Line tab has a dropdown, since each line in a claim may have different sets of data.  Both the Line & Detail tabs will display the data in different formats based on the data types defined & pulled from the database.

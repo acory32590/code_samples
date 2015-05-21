@@ -1,0 +1,24 @@
+<UserControl mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <userControls:ContentWithProgressControl Margin="0" Padding="0" IsTabStop="False" KeyDown="UIElement_OnKeyDown">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <c1:C1TabControl x:Name="TabItems" CanUserReorder="False">
+                <c1:C1TabItem Header="CDD Claim Details" >
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <Views:CDDDetailView x:Name="CDDDetailView"/>
+                    </ScrollViewer>
+                </c1:C1TabItem>
+                <c1:C1TabItem Header="CDD Line Item Details" >
+                    <Views:CDDLineView x:Name="CDDLineView"/>
+                </c1:C1TabItem>
+            </c1:C1TabControl>
+        </Grid>
+    </userControls:ContentWithProgressControl>
+</UserControl>

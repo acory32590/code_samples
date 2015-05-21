@@ -1,0 +1,139 @@
+<UserControl mc:Ignorable="d" 
+             FocusManager.FocusedElement="{utilities:WpfFocusManager}" 
+             userControls:UserControlExtension.VisibleOnly="True"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <!-- DataTemplate for univalue text data -->
+        <DataTemplate x:Key="UvTextDataTemplate">
+            <Grid Margin="0,5,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Key" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding UvDisplayName}" />
+                <userControls:MitigatedTextBox Grid.Column="2" Loaded="AuxView_Loaded" Text="{Binding Path=UvValue}"
+                    IsReadOnly="{Binding Path=DispFlag, Converter={StaticResource CDDDisplayToBoolConverter}}" />
+            </Grid>
+        </DataTemplate>
+
+        <!-- DataTemplate for univalue numeric data -->
+        <DataTemplate x:Key="UvNumericDataTemplate">
+            <Grid Margin="0,5,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Key" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding UvDisplayName}" />
+                <userControls:MitigatedNumericBox Grid.Column="2" Loaded="AuxView_Loaded" 
+                    Value="{Binding Path=UvValue, Converter={StaticResource StringToNumberConverter}, ConverterParameter=int}" 
+                    IsReadOnly="{Binding Path=DispFlag, Converter={StaticResource CDDDisplayToBoolConverter}}" />
+            </Grid>
+        </DataTemplate>
+
+        <!-- DataTemplate for univalue long numeric data -->
+        <DataTemplate x:Key="UvLongNumericDataTemplate">
+            <Grid Margin="0,5,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Key" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding UvDisplayName}" />
+                <userControls:MitigatedNumericBox Grid.Column="2" Loaded="AuxView_Loaded" 
+                    Value="{Binding Path=UvValue, Converter={StaticResource StringToNumberConverter}, ConverterParameter=long}" 
+                    IsReadOnly="{Binding Path=DispFlag, Converter={StaticResource CDDDisplayToBoolConverter}}" />
+            </Grid>
+        </DataTemplate>
+
+        <!-- DataTemplate for univalue decimal data -->
+        <DataTemplate x:Key="UvDecimalDataTemplate">
+            <Grid Margin="0,5,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Key" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding UvDisplayName}" />
+                <userControls:MitigatedNumericBox Grid.Column="2"  Loaded="AuxView_Loaded" 
+                    Value="{Binding Path=UvValue, Converter={StaticResource StringToNumberConverter}, ConverterParameter=decimal}" 
+                    IsReadOnly="{Binding Path=DispFlag, Converter={StaticResource CDDDisplayToBoolConverter}}" />
+            </Grid>
+        </DataTemplate>
+
+        <!-- DataTemplate for univalue date data -->
+        <DataTemplate x:Key="UvDateDataTemplate">
+            <Grid Margin="0,5,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Key" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding UvDisplayName}"/>
+                <userControls:MitigatedDateTimePicker Grid.Column="2" DateTime="{Binding Path=UvValue, Converter={StaticResource StringToShortDateConverter}}" Loaded="AuxView_Loaded"
+                    IsReadOnly="{Binding Path=DispFlag, Converter={StaticResource CDDDisplayToBoolConverter}}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="MvDataTemplate">
+            <Grid Margin="0,5,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Key" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding UvDisplayName}"/>
+                <userControls:MitigatedDateTimePicker Grid.Column="2" DateTime="{Binding Path=UvValue, Converter={StaticResource StringToShortDateConverter}}" Loaded="AuxView_Loaded"
+                    IsReadOnly="{Binding Path=DispFlag, Converter={StaticResource CDDDisplayToBoolConverter}}" />
+            </Grid>
+        </DataTemplate>
+
+        <!-- DataTemplate Selector -->
+        <common:AuxDataTemplateSelector x:Key="AuxDataTemplateSelector"
+              UvTextDataTemplate="{StaticResource UvTextDataTemplate}"
+              UvNumericDataTemplate="{StaticResource UvNumericDataTemplate}"
+              UvLongNumericDataTemplate="{StaticResource UvLongNumericDataTemplate}"
+              UvDecimalDataTemplate="{StaticResource UvDecimalDataTemplate}"
+              UvDateDataTemplate="{StaticResource UvDateDataTemplate}"
+              MvDataTemplate="{StaticResource MvDataTemplate}"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Margin" Value="-5,0,0,0"/>
+                </Style>
+            </StackPanel.Resources>
+            
+            <Label Content="Line Selection:" HorizontalAlignment ="Left" VerticalAlignment="Center" IsTabStop="False"/>
+
+            <userControls:MitigatedComboBox DisplayMemberPath="Value" SelectedValuePath="Key" HorizontalAlignment ="Center"
+                ItemsSource="{Binding ClaimLines}" SelectedValue="{Binding SelectedLine}"/>
+
+            <Label Content="{Binding CountText}" HorizontalAlignment ="Left" VerticalAlignment="Center" IsTabStop="False"/>
+        </StackPanel>
+
+        <Button Grid.Row="0" Grid.Column="1" Content="Clear Data" HorizontalAlignment ="Right" VerticalAlignment="Center" Width="Auto"
+                Command="{Binding ClearLineDataCommand}" Visibility="{Binding IsNotReadOnly, Converter={StaticResource bool2visibility}}" />
+
+        <ScrollViewer Grid.Row="2" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="ControlListBox" BorderBrush="Transparent" Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch"
+                      ItemTemplateSelector="{StaticResource AuxDataTemplateSelector}" KeyboardNavigation.TabNavigation="Continue" Loaded="AuxView_Loaded" 
+                      IsTabStop="False" ItemsSource="{Binding SelectedLineAux}"/>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>
